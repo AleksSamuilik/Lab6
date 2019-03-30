@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class BankCard {
-    private static String cardNumber;
+    private static final int groupNumber = 4;
+    private static String cardNumber = "";
     private static int sum;
 
     public static boolean isCorrectCardNumber(String string) {
@@ -27,33 +28,47 @@ public class BankCard {
         }
     }
 
-
     public static void readUserInput() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the 16th digit card number: ");
-        while (true) {
+        Scanner scanner = new Scanner(System.in);
+        boolean count = true;
+        while (count) {
             String number = scanner.nextLine();
-            number = number.replaceAll("\\s", "");
-            try {
-                long digit = Long.parseLong(number);
-                if (digit > 0 && number.length() == 16) {
-                    cardNumber = number;
-                    break;
-                } else
-                    System.out.println("Sorry. Try again!");
-            } catch (NumberFormatException e) {
-                System.out.println("Sorry. Try again!");
+            for (int i = 0; i < number.length(); i++) {
+                char digit = number.charAt(i);
+                if (Character.isSpaceChar(digit)) {
+                    continue;
+                } else if (Character.isDigit(digit)) {
+                    cardNumber += Character.toString(digit);
+                }
+            }
+            if (cardNumber.length() == 16) {
+                count = false;
+            } else {
+                System.out.println("Sorry. Try again.");
+                cardNumber = "";
             }
         }
-        scanner.close();
+    }
+
+    public static String formatString(String string) {
+        String sortString = "";
+        for (int i = 0; i < string.length(); i++) {
+            if (i != 0 && i % groupNumber == 0) {
+                if (i < string.length()) {
+                    sortString += " ";
+                }
+            }
+            sortString += String.valueOf(string.charAt(i));
+        }
+        return sortString;
     }
 
     public static void main(String[] args) {
         System.out.println("This program verifies bank card number using Luhn algorithm.");
         readUserInput();
-        printsMessage(isCorrectCardNumber(cardNumber));
+        boolean result = isCorrectCardNumber(cardNumber);
+        cardNumber = formatString(cardNumber);
+        printsMessage(result);
     }
-
 }
-
-
