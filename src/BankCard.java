@@ -72,6 +72,7 @@ public class BankCard {
     public static void main(String[] args) {
         System.out.println("This program verifies bank card number using Luhn algorithm.");
         String cardNumber = readUserInput();
-        printMessage(isCorrectCardNumber(luhnAlgorithm(cardNumber)), luhnAlgorithm(cardNumber), formatString(cardNumber));
+        int sumLuhnAlgorithm =luhnAlgorithm(cardNumber);
+        printMessage(isCorrectCardNumber(sumLuhnAlgorithm), sumLuhnAlgorithm, formatString(cardNumber));
     }
 }
