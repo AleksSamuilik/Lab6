@@ -55,6 +55,7 @@ public class BankCard {
                 cardNumber = "";
             }
         }
+        scanner.close();
         return cardNumber;
     }
 
